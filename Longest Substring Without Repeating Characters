@@ -1,0 +1,25 @@
+Solution:
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        // Array to store last seen position of each ASCII character
+        int[] lastSeen = new int[128]; // ASCII has 128 characters
+        int maxLength = 0;
+        int start = 0; // Left boundary of the sliding window
+
+        for (int end = 0; end < s.length(); end++) {
+            char currentChar = s.charAt(end);
+
+            // If the character was seen, move the start to the right of last seen index
+            start = Math.max(start, lastSeen[currentChar]);
+
+            // Update maxLength with current window size
+            maxLength = Math.max(maxLength, end - start + 1);
+
+            // Update the last seen index of currentChar (+1 to avoid default 0 issue)
+            lastSeen[currentChar] = end + 1;
+        }
+
+        return maxLength;
+    }
+}
